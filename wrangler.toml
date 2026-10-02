@@ -6,8 +6,3 @@ compatibility_date = "2026-09-25"
 directory = "."
 binding = "ASSETS"
 not_found_handling = "single-page-application"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "safe-rich-referral"
-database_id = "9523b9a0-f24e-46a5-9c0e-00de9963ce81"
