@@ -398,13 +398,10 @@ function showProductDetail(name, image, pack, price) {
           text-align:left;
           line-height:1.6;
           font-size:14px;
-        ">
-          <strong>Product Information</strong>
-          <p style="margin:8px 0 0;">
-            यह Safe Rich Ayurveda का Ayurvedic product है।
-            कृपया product label पर दिए गए ingredients, उपयोग की विधि,
-            मात्रा और सावधानियों को ध्यानपूर्वक पढ़ें।
-          </p>
+        <strong>🌿 Uses / उपयोग</strong>
+<p style="margin:8px 0 0;">
+${productDetails[name]?.uses || "इस product के उपयोग की जानकारी के लिए product label देखें।"}
+</p>
         </div>
 
         <button
