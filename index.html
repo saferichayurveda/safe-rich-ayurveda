@@ -198,11 +198,189 @@ footer{margin-top:30px;background:#053a27;color:#fff;text-align:center;padding:1
 <div class="cart" id="cart">🛒 Cart 0</div>
 <footer>© 2026 Safe Rich Ayurveda • Health is Wealth</footer>
 <script>
-let cartCount=0;
-function addToCart(name,price){
+let cartCount = 0;
+
+/* Add to Cart */
+function addToCart(name, price) {
   cartCount++;
-  document.getElementById('cart').textContent='🛒 Cart '+cartCount;
-  alert(name+' added to cart.'); 
+  document.getElementById('cart').textContent = '🛒 Cart ' + cartCount;
+  alert(name + ' added to cart.');
+}
+
+/* Product Detail Popup */
+document.addEventListener('DOMContentLoaded', function () {
+
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach(function(card) {
+
+    card.style.cursor = 'pointer';
+
+    card.addEventListener('click', function(e) {
+
+      /* Add to Cart button par click hone par detail popup na khule */
+      if (e.target.tagName === 'BUTTON') {
+        return;
+      }
+
+      const image = card.querySelector('img');
+      const name = card.querySelector('[itemprop="name"]');
+      const pack = card.querySelector('[itemprop="size"]');
+      const price = card.querySelector('[itemprop="price"]');
+
+      if (!name) return;
+
+      const productName = name.textContent.trim();
+      const productImage = image ? image.getAttribute('src') : '';
+      const productPack = pack ? pack.textContent.trim() : '';
+      const productPrice = price ? price.textContent.trim() : '';
+
+      showProductDetail(
+        productName,
+        productImage,
+        productPack,
+        productPrice
+      );
+    });
+  });
+});
+
+
+/* Show Product Detail */
+function showProductDetail(name, image, pack, price) {
+
+  /* Agar purana popup ho to remove kare */
+  const oldModal = document.getElementById('productDetailModal');
+  if (oldModal) {
+    oldModal.remove();
+  }
+
+  const modal = document.createElement('div');
+  modal.id = 'productDetailModal';
+
+  modal.innerHTML = `
+    <div style="
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.65);
+      z-index:99999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:15px;
+    ">
+
+      <div style="
+        background:#fff;
+        width:100%;
+        max-width:430px;
+        max-height:90vh;
+        overflow-y:auto;
+        border-radius:18px;
+        padding:20px;
+        position:relative;
+        box-shadow:0 10px 35px rgba(0,0,0,0.3);
+        text-align:center;
+      ">
+
+        <button
+          onclick="closeProductDetail()"
+          style="
+            position:absolute;
+            right:12px;
+            top:10px;
+            width:36px;
+            height:36px;
+            border:0;
+            border-radius:50%;
+            background:#eee;
+            font-size:22px;
+            cursor:pointer;
+          "
+        >×</button>
+
+        <img
+          src="${image}"
+          alt="${name}"
+          style="
+            width:100%;
+            max-width:260px;
+            height:260px;
+            object-fit:contain;
+            border-radius:12px;
+            margin-top:10px;
+          "
+        >
+
+        <h2 style="
+          margin:15px 0 8px;
+          color:#08733b;
+          font-size:23px;
+        ">${name}</h2>
+
+        <p style="
+          font-size:16px;
+          margin:8px 0;
+        ">
+          <strong>Pack Size:</strong> ${pack}
+        </p>
+
+        <p style="
+          font-size:18px;
+          margin:8px 0;
+        ">
+          <strong>Price:</strong> ₹${price}
+        </p>
+
+        <div style="
+          margin-top:18px;
+          padding:14px;
+          background:#f5f8f5;
+          border-radius:12px;
+          text-align:left;
+          line-height:1.6;
+          font-size:14px;
+        ">
+          <strong>Product Information</strong>
+          <p style="margin:8px 0 0;">
+            यह Safe Rich Ayurveda का Ayurvedic product है।
+            कृपया product label पर दिए गए ingredients, उपयोग की विधि,
+            मात्रा और सावधानियों को ध्यानपूर्वक पढ़ें।
+          </p>
+        </div>
+
+        <button
+          onclick="addToCart('${name.replace(/'/g, "\\'")}', ${parseFloat(price) || 0}); closeProductDetail();"
+          style="
+            margin-top:18px;
+            width:100%;
+            padding:13px;
+            border:0;
+            border-radius:10px;
+            background:#08733b;
+            color:white;
+            font-size:16px;
+            font-weight:bold;
+            cursor:pointer;
+          "
+        >
+          🛒 Add to Cart
+        </button>
+
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+}
+
+
+/* Close Product Detail */
+function closeProductDetail() {
+  const modal = document.getElementById('productDetailModal');
+  if (modal) {
+    modal.remove();
+  }
 }
 </script>
 </body></html>
