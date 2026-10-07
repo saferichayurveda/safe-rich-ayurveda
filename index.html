@@ -60,4 +60,6 @@ function openWhatsApp(msg){window.open('https://wa.me/?text='+encodeURIComponent
 document.getElementById('cartBar').onclick=openCart;document.getElementById('makeRef').onclick=registerReferral;document.getElementById('search').addEventListener('input',e=>{const q=e.target.value.toLowerCase().trim();renderProducts(products.filter(p=>p.name.toLowerCase().includes(q)))});renderProducts();updateCartBar();
 const incomingRef=new URLSearchParams(location.search).get('ref');if(incomingRef){localStorage.setItem('sraReferralCode',incomingRef);document.getElementById('referral').scrollIntoView({behavior:'smooth',block:'center'})}
 </script>
+
+<!-- Cloudflare sync trigger -->
 </body></html>
